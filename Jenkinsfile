@@ -8,7 +8,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'git@github.com:Surya-Dasari/ci-sample-app.git', branch: 'main'
+                git url: 'https://github.com/Surya-Dasari/ci-sample-app.git', branch: 'main', credentialsId: 'github-pat'
+
             }
         }
 
