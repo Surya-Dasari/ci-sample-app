@@ -27,10 +27,10 @@ pipeline {
             steps {
                 sh '''
                     # Point Docker to Minikube's Docker daemon
-                    eval $(minikube docker-env)
+                    sudo eval $(minikube docker-env)
 
                     # Build the Docker image inside Minikube context
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                    sudo docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
             }
         }
@@ -39,7 +39,7 @@ pipeline {
             steps {
                 sh '''
                     # Apply the Kubernetes manifest
-                    kubectl apply -f k8s/deployment.yaml
+                    sudo kubectl apply -f k8s/deployment.yaml
                 '''
             }
         }
@@ -51,3 +51,4 @@ pipeline {
         }
     }
 }
+
