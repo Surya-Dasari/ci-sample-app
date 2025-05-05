@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.1' // Set this version in Jenkins Global Tools config
+        maven 'Maven 3.8.1'
     }
 
     environment {
@@ -26,10 +26,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    # Point Docker to Minikube's Docker daemon
                     eval $(minikube docker-env)
-
-                    # Build the Docker image inside Minikube context
                     docker build -t $IMAGE_NAME:$IMAGE_TAG .
                 '''
             }
@@ -38,8 +35,8 @@ pipeline {
         stage('Deploy to Minikube') {
             steps {
                 sh '''
-                    # Apply the Kubernetes manifest
-                    kubectl apply -f k8s/deployment.yaml
+                    # Deploy using minikube's internal kubectl
+                    minikube kubectl -- apply -f k8s/deployment.yaml
                 '''
             }
         }
